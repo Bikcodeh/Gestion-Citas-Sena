@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/dashboard_backgroud_body" />
+    <item
+        android:height="200dp"
+        android:drawable="@drawable/dashboard_backgroud_top" />
+
+    <item
+        android:drawable="@drawable/dashboard_background_bottom"
+        android:id="@+id/parte_baja"
+        android:height="200dp"
+        android:gravity="bottom" />
+</layer-list>

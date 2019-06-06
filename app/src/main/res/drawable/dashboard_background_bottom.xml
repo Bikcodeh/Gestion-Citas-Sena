@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:drawable="@drawable/dashboard_background_bottom_shape_rect"
+        android:id="@+id/parte_baja"
+        android:height="200dp"
+        android:top="0dp" />
+
+    <item
+        android:drawable="@drawable/dashboard_background_bottom_shape_circular"
+        android:height="200dp" />
+
+</layer-list>

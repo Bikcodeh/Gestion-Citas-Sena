@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".modules.consultorios.ConsultoriosForm">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/form_citas_paciente_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/holder_paciente" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/form_identification"
+
+                    app:hintEnabled="true">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/form_citas_paciente_identificacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:inputType="number"
+                        android:textSize="14dp" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+
+        </android.support.design.card.MaterialCardView>
+
+        <!-- MEDICO -->
+
+        <android.support.design.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/form_citas_medico_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/holder_medico" />
+
+                <TextView
+                    android:id="@+id/form_citas_medico_profesion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/holder_profession" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/form_identification"
+
+                    app:hintEnabled="true">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/form_citas_medico_identificacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:inputType="number"
+                        android:textSize="14dp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+        </android.support.design.card.MaterialCardView>
+
+
+        <!-- Consultorio -->
+
+        <android.support.design.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_spinner"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="4dp"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/consultorios" />
+
+                    <Spinner
+                        android:id="@+id/form_citas_consultorio_name"
+                        style="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:fontFamily="sans-serif-light"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/form_citas_fecha"
+                        style="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:editable="false"
+                        android:fontFamily="sans-serif-light"
+                        android:gravity="center"
+                        android:hint="@string/form_fecha"
+                        android:textAlignment="center"
+                        android:textSize="14dp" />
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/form_citas_hora"
+                        style="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:editable="false"
+                        android:fontFamily="sans-serif-light"
+                        android:gravity="center"
+                        android:hint="@string/form_hora"
+                        android:textAlignment="center"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.design.card.MaterialCardView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

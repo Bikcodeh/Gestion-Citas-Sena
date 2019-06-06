@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Gestion de Citas</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="clinica_la_esperanza">Clinica la esperanza</string>
+    <string name="slogan">Su salud es primero</string>
+    <string name="medicos">Medicos</string>
+    <string name="pacientes">Pacientes</string>
+    <string name="consultorios">Consultorios</string>
+    <string name="citas">Citas</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="listado">Listado</string>
+    <string name="nuevo">Nuevo</string>
+    <string name="holder_name">Crhistian David Vergara</string>
+    <string name="holder_profession">Ginecologo</string>
+    <string name="holder_identification">1113632479</string>
+    <string name="buscar">Buscar</string>
+    <string name="filtrar">Filtrar</string>
+    <string name="menu_buscar">Buscar</string>
+    <string name="holder_modules">Modulo Seleccionado</string>
+    <string name="menu_delete">Delete</string>
+    <string name="holder_consultorio">Consultorio Norte</string>
+    <string name="holder_telefono">(+57) 2 - 315 318 88 99</string>
+    <string name="holder_direccion">Carrera 21 No 25-44</string>
+    <string name="paciente">Paciente</string>
+    <string name="holder_paciente">Paciente: Crhistian Vergara</string>
+    <string name="holder_medico">Medico: David Gomez</string>
+    <string name="medico">Medico</string>
+    <string name="holder_fecha">21 Noviembre 2016</string>
+    <string name="fecha">Fecha:</string>
+    <string name="form_name">Nombre *</string>
+    <string name="form_lastname">Apellido *</string>
+    <string name="form_identification">Identificación *</string>
+    <string name="profesion">Profesión*</string>
+    <string name="form_description">Descripción *</string>
+    <string name="form_telephone">Teléfono *</string>
+    <string name="form_address">Dirección *</string>
+    <string name="form_fecha">Fecha *</string>
+    <string name="form_hora">Hora *</string>
+</resources>
