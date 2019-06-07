@@ -6,6 +6,7 @@ import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -213,8 +214,24 @@ public class DispatchModule extends Fragment implements TextWatcher, ModulesList
     void changueFragment(Fragment f, boolean syncAnim) {
         final int alignFab;
         final int iconFab;
-        getFragmentManager()
-                .beginTransaction()
+        FragmentTransaction fragmentTransaction = getFragmentManager()
+                .beginTransaction();
+        if (syncAnim){
+            if( f == mForm ) {
+                fragmentTransaction.setCustomAnimations(
+                        R.anim.exit_dashboard_fragment_anim,
+                        R.anim.enter_fragment_anim
+                );
+            }
+            else {
+                fragmentTransaction.setCustomAnimations(
+                        R.anim.enter_dashboard_fragment_anim,
+                        R.anim.exit_fragment_anim
+                );
+            }
+        }
+
+        fragmentTransaction
                 .replace(R.id.containerInnerModule, f)
                 .commit();
 

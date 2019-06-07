@@ -64,14 +64,7 @@ public class MedicosList extends Fragment implements ModulesListListener {
     @Override
     public void onReloadList() {
         medicos.clear();
-
-        // TODO: Llenar la lista de medicos
-        for (int i = 0; i <= 20; i++) {
-            medicos.add(new Medicos(i, "Crhistian " + String.valueOf(i), "1113632479", "Ginecologo"));
-        }
-
+        medicos.addAll( new Medicos(getContext()).getAllMedicos()  );
         adapterMedicos.notifyDataSetChanged();
     }
-
-
 }

@@ -21,8 +21,6 @@ public class MainActivity extends AppCompatActivity implements Dashboard.OnItemS
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getColor(R.color.colorPrimary));
         }
-
-        //Dashboard dashboard = new Dashboard();
         dashboard.setOnItemSelectedListener(this);
         showDashboard();
     }
@@ -53,14 +51,17 @@ public class MainActivity extends AppCompatActivity implements Dashboard.OnItemS
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .addToBackStack(null)
+                .addToBackStack("DASHBOARD")
+                .setCustomAnimations(
+                        R.anim.enter_fragment_anim,
+                        R.anim.exit_dashboard_fragment_anim
+                )
                 .replace(R.id.containerMain, dispatchModule)
                 .commit();
     }
 
     @Override
     public void onBackPressed() {
-        // super.onBackPressed();
         showDashboard();
     }
 
@@ -68,7 +69,12 @@ public class MainActivity extends AppCompatActivity implements Dashboard.OnItemS
     public void showDashboard() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.containerMain, dashboard)
+                .setCustomAnimations(
+                        R.anim.enter_dashboard_fragment_anim,
+                        R.anim.exit_fragment_anim
+
+                )
+                .replace(R.id.containerMain, dashboard, "DASHBOARD")
                 .commit();
     }
 
