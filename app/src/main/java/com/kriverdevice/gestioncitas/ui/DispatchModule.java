@@ -219,8 +219,8 @@ public class DispatchModule extends Fragment implements TextWatcher, ModulesList
         if (syncAnim){
             if( f == mForm ) {
                 fragmentTransaction.setCustomAnimations(
-                        R.anim.exit_dashboard_fragment_anim,
-                        R.anim.enter_fragment_anim
+                        R.anim.enter_fragment_anim,
+                        R.anim.exit_dashboard_fragment_anim
                 );
             }
             else {
