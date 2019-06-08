@@ -119,7 +119,7 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
 
         // TODO: Notificar al padre para que haga el cambio de la vista
         if ( moduleFormListener != null ){
-            moduleFormListener.onBack();
+            // moduleFormListener.onBack();
         }
     }
 
@@ -172,7 +172,7 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
     }
 
     public void setModuleFormListener(ModuleFormListener moduleFormListener) {
-        this.moduleFormListener = moduleFormListener;
+        // this.moduleFormListener = moduleFormListener;
     }
 
     @Override
