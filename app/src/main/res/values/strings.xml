@@ -41,4 +41,5 @@
     <string name="form_hora">Hora *</string>
     <string name="oops_records">Ups, No hay registros</string>
     <string name="saved">Registro guardado</string>
+    <string name="update">Registro actualizado</string>
 </resources>
