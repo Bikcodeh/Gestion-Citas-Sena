@@ -3,6 +3,7 @@ package com.kriverdevice.gestioncitas.modules.medicos;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
@@ -28,12 +29,13 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
     Spinner profession;
     ArrayList<String> especialidades;
     ArrayAdapter<String> professions;
+    View v;
     private String operaction = Constants.MODULE_OPERATION_NEW;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.form_medicos, container, false);
+        v = inflater.inflate(R.layout.form_medicos, container, false);
 
         nombre = v.findViewById(R.id.form_medico_nomnbre);
         apellido = v.findViewById(R.id.form_medico_apellido);
@@ -61,6 +63,10 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
                 this.operaction = Constants.MODULE_OPERATION_UPDATE;
                 fillForm(data);
             }
+        } else {
+            nombre.setText("");
+            apellido.setText("");
+            profession.setSelection(0);
         }
     }
 
@@ -79,6 +85,9 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
                 delete();
                 break;
         }
+        nombre.setText("");
+        apellido.setText("");
+        identificacion.setText("");
     }
 
     private void delete() {
@@ -87,21 +96,23 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
     }
 
     private void save() {
-        // TODO: SAVE
-        Toast.makeText(getContext(), "Save", Toast.LENGTH_SHORT).show();
+
+        Medicos medicos = new Medicos(getContext());
+        medicos.setIdentificacion(identificacion.getText().toString());
+        medicos.setNombre(nombre.getText().toString());
+        medicos.setApellido(apellido.getText().toString());
+        medicos.setProfesion(profession.getSelectedItem().toString());
+
         switch (this.operaction) {
             case Constants.MODULE_OPERATION_NEW:
-
-                Medicos medicos = new Medicos(getContext());
-                medicos.setIdentificacion(identificacion.getText().toString());
-                medicos.setNombre(nombre.getText().toString());
-                medicos.setApellido(apellido.getText().toString());
-                medicos.setProfesion(profession.getSelectedItem().toString());
                 medicos.create();
                 break;
+
             case Constants.MODULE_OPERATION_UPDATE:
+                medicos.update();
                 break;
         }
+        Toast.makeText(getContext(), getString(R.string.saved), Toast.LENGTH_SHORT).show();
     }
 
     // Llena el formulario
@@ -113,7 +124,9 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
         int idProfession = especialidades.indexOf(medico.getProfesion());
         profession.setSelection(idProfession);
     }
+
     @Override
-    public void onBack() {}
+    public void onBack() {
+    }
 
 }

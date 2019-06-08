@@ -198,6 +198,7 @@ public class DispatchModule extends Fragment implements TextWatcher, ModulesList
         @Override
         public void onClick(View v) {
             if (formCurrentOperation == Constants.MODULE_OPERATION_NEW) {
+                mForm.setArguments(null);
                 changueFragment(mForm);
             } else {
                 ((ModuleFormListener) mForm).onSave(formCurrentOperation);
