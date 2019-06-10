@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.kriverdevice.gestioncitas.database.DatabaseHelper;
@@ -24,19 +23,6 @@ public class Medicos extends DatabaseHelper implements Parcelable {
 
     //Nombre de la tabla MySQL
     private String tabla = "medicos";
-
-    public Medicos Medicos(String nombre, String apellido, String identificacion, int profesion) {
-        return new Medicos(null, nombre, apellido, identificacion, profesion);
-    }
-
-    public Medicos(@Nullable Integer id, String nombre, String apellido, String identificacion, int profesion) {
-        super(null);
-        this.nombre = nombre;
-        this.identificacion = identificacion;
-        this.profesion = profesion;
-        this.id = id;
-        this.apellido = apellido;
-    }
 
     /*
         PERSISTENCIA EN LA BASE DE DATOS
@@ -145,10 +131,7 @@ public class Medicos extends DatabaseHelper implements Parcelable {
         selectQuery += "FROM medicos m, especialidads e WHERE m.especialidad_id = e.id ";
 
         SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor c = null;
-
-        c = db.rawQuery(selectQuery, null);
+        Cursor c = db.rawQuery(selectQuery, null);
 
         if (c.moveToFirst()) { /* moveToFirst() devuelve TRUE en caso de haber realizado el movimiento */
             do {

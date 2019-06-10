@@ -22,6 +22,11 @@ public class AdapterMedicos extends RecyclerView.Adapter<AdapterMedicos.ViewHold
         this.onItemListClickListener = onItemListClickListener;
     }
 
+    public void setDataSources(List<Medicos> sourceDataModel) {
+        this.sourceDataModel = sourceDataModel;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.view_holder_list_medicos, viewGroup, false);

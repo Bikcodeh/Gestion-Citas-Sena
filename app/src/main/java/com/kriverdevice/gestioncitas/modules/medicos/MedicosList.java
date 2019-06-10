@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.kriverdevice.gestioncitas.R;
 import com.kriverdevice.gestioncitas.adapters.AdapterMedicos;
@@ -16,6 +15,7 @@ import com.kriverdevice.gestioncitas.interfaces.ModulesListListener;
 import com.kriverdevice.gestioncitas.models.Medicos;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class MedicosList extends Fragment implements ModulesListListener {
 
@@ -31,7 +31,7 @@ public class MedicosList extends Fragment implements ModulesListListener {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.shared_modules_recycler_view, container, false);
-        RecyclerView mList = v.findViewById(R.id.listadoModules);
+        mList = v.findViewById(R.id.listadoModules);
 
         adapterMedicos = new AdapterMedicos(medicos, this);
 
@@ -56,9 +56,23 @@ public class MedicosList extends Fragment implements ModulesListListener {
 
     // Es informado para que realice el filtro sobre la lista
     @Override
-    public void onSearch(String value) {
-        // TODO: Filtar el valor del array
-        Toast.makeText(getContext(), "Filtrar el valor: " + value, Toast.LENGTH_LONG).show();
+    public void onSearch(final String value) {
+
+        if (value.isEmpty()) {
+            adapterMedicos.setDataSources(medicos);
+            return;
+        }
+
+        // Clona el origen de datos de la lista y realiza el filtro por el valor pasado
+        ArrayList<Medicos> fMedicos = (ArrayList<Medicos>) medicos.clone();
+
+        for (Iterator<Medicos> i = fMedicos.iterator(); i.hasNext(); ) {
+            if (!i.next().getNombre().contains(value)) {
+                i.remove();
+            }
+        }
+
+        adapterMedicos.setDataSources(fMedicos);
     }
 
     @Override

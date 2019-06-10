@@ -121,9 +121,17 @@ public class DispatchModule extends Fragment implements TextWatcher, ModulesList
          **/
 
         appbar.replaceMenu(R.menu.menu_appbar);
-        findMenuButton = appbar.getMenu().findItem(R.id.menu_item_find);
-        cancelMenuButton = appbar.getMenu().findItem(R.id.menu_item_cancel);
-        deleteMenuButton = appbar.getMenu().findItem(R.id.menu_item_del);
+        findMenuButton = appbar.getMenu().
+
+                findItem(R.id.menu_item_find);
+
+        cancelMenuButton = appbar.getMenu().
+
+                findItem(R.id.menu_item_cancel);
+
+        deleteMenuButton = appbar.getMenu().
+
+                findItem(R.id.menu_item_del);
 
         findMenuButton.setOnMenuItemClickListener(menuItemClickListener);
         cancelMenuButton.setOnMenuItemClickListener(menuItemClickListener);
@@ -148,8 +156,8 @@ public class DispatchModule extends Fragment implements TextWatcher, ModulesList
 
         fab = v.findViewById(R.id.fab);
         fab.setOnClickListener(fabOnClickListener);
-        changueFragment(mList, false);
 
+        changueFragment(mList, false);
         return v;
     }
 
@@ -218,14 +226,13 @@ public class DispatchModule extends Fragment implements TextWatcher, ModulesList
         final int iconFab;
         FragmentTransaction fragmentTransaction = getFragmentManager()
                 .beginTransaction();
-        if (syncAnim){
-            if( f == mForm ) {
+        if (syncAnim) {
+            if (f == mForm) {
                 fragmentTransaction.setCustomAnimations(
                         R.anim.enter_fragment_anim,
                         R.anim.exit_dashboard_fragment_anim
                 );
-            }
-            else {
+            } else {
                 fragmentTransaction.setCustomAnimations(
                         R.anim.enter_dashboard_fragment_anim,
                         R.anim.exit_fragment_anim
@@ -303,7 +310,6 @@ public class DispatchModule extends Fragment implements TextWatcher, ModulesList
     @Override
     public void onBack() {
         changueFragment(mList);
-        ((ModulesListListener) mList).onReloadList();
     }
 
     @Override

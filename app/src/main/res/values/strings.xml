@@ -42,4 +42,5 @@
     <string name="oops_records">Ups, No hay registros</string>
     <string name="saved">Registro guardado</string>
     <string name="update">Registro actualizado</string>
+    <string name="form_validate_message">Debe llenar todos los campos del formulario</string>
 </resources>

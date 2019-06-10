@@ -20,6 +20,7 @@ import com.kriverdevice.gestioncitas.models.Medicos;
 
 import java.util.ArrayList;
 
+import static android.widget.Toast.LENGTH_SHORT;
 import static com.kriverdevice.gestioncitas.R.layout.support_simple_spinner_dropdown_item;
 
 public class MedicosForm extends Fragment implements ModuleFormListener {
@@ -29,9 +30,9 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
     private String operaction = null;
     Integer id = null;
     AppCompatEditText
-    nombre,
-    apellido,
-    identificacion;
+            nombre,
+            apellido,
+            identificacion;
 
     Spinner profession;
 
@@ -51,6 +52,13 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
         identificacion = v.findViewById(R.id.form_medico_identificacion);
         profession = v.findViewById(R.id.form_medico_profession);
 
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         especialidades = new Especialidades(this.getContext()).getEspecialidades();
 
         professions = new ArrayAdapter<String>(
@@ -60,12 +68,6 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
         );
 
         profession.setAdapter(professions);
-        return v;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
 
         Bundle argument = getArguments();
 
@@ -81,9 +83,6 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
 
                 // Llena los campos del formulario.
                 fillForm(data);
-
-                // Limpia el bundle para la proxima llamada
-                this.setArguments(null);
             }
         } else {
             // Establece el flag de la operacion que se realiza
@@ -97,6 +96,8 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
 
     @Override
     public void onSave(String operation) {
+
+        if (!validateForm()) return;
 
         // Evita que se realice una operacion diferente notificada desde el menu
         if (operation != Constants.MODULE_OPERATION_SAVE &&
@@ -117,15 +118,31 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
         profession.setSelection(0);
         this.id = null;
 
-        // TODO: Notificar al padre para que haga el cambio de la vista
-        if ( moduleFormListener != null ){
-            // moduleFormListener.onBack();
+        // Notifica al padre para que haga el cambio de la vista
+        if (moduleFormListener != null) {
+            moduleFormListener.onBack();
         }
+    }
+
+    private boolean validateForm() {
+        if (
+                nombre.getText().toString().isEmpty() ||
+                        nombre.getText().toString().isEmpty() ||
+                        nombre.getText().toString().isEmpty()
+        ) {
+            Toast.makeText(
+                    getContext(),
+                    R.string.form_validate_message,
+                    LENGTH_SHORT)
+                    .show();
+            return false;
+        }
+        return true;
     }
 
     private void delete() {
         new Medicos(getContext()).deleteBy(this.id);
-        Toast.makeText(getContext(), "Delete", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Delete", LENGTH_SHORT).show();
     }
 
     private void save() {
@@ -152,7 +169,7 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
                 break;
         }
 
-        Toast.makeText(getContext(), respMsg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), respMsg, LENGTH_SHORT).show();
     }
 
     // Llena el formulario
@@ -172,7 +189,7 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
     }
 
     public void setModuleFormListener(ModuleFormListener moduleFormListener) {
-        // this.moduleFormListener = moduleFormListener;
+        this.moduleFormListener = moduleFormListener;
     }
 
     @Override
