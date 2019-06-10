@@ -72,6 +72,7 @@ public class DispatchModule extends Fragment implements TextWatcher, ModulesList
                 title = R.string.pacientes;
                 icon = R.mipmap.paciente;
                 ((PacientesList) mList).setOnItemListClickListener(this);
+                ((PacientesForm) mForm).setModuleFormListener(this);
                 break;
             case Constants.MODULE_CITAS:
                 mList = new CitasList();

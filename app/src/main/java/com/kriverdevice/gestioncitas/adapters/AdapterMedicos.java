@@ -35,7 +35,7 @@ public class AdapterMedicos extends RecyclerView.Adapter<AdapterMedicos.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        viewHolder.nombre.setText(sourceDataModel.get(i).getNombre());
+        viewHolder.nombre.setText(sourceDataModel.get(i).getNombre() + " " + sourceDataModel.get(i).getApellido());
         viewHolder.identificacion.setText(sourceDataModel.get(i).getIdentificacion());
         viewHolder.profesion.setText(sourceDataModel.get(i).getProfesion());
         viewHolder.dataModel = sourceDataModel.get(i);

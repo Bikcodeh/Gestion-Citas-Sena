@@ -127,8 +127,8 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
     private boolean validateForm() {
         if (
                 nombre.getText().toString().isEmpty() ||
-                        nombre.getText().toString().isEmpty() ||
-                        nombre.getText().toString().isEmpty()
+                        apellido.getText().toString().isEmpty() ||
+                        identificacion.getText().toString().isEmpty()
         ) {
             Toast.makeText(
                     getContext(),
@@ -142,7 +142,7 @@ public class MedicosForm extends Fragment implements ModuleFormListener {
 
     private void delete() {
         new Medicos(getContext()).deleteBy(this.id);
-        Toast.makeText(getContext(), "Delete", LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.delete_record, LENGTH_SHORT).show();
     }
 
     private void save() {

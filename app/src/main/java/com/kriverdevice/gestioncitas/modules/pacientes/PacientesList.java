@@ -8,29 +8,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.kriverdevice.gestioncitas.R;
 import com.kriverdevice.gestioncitas.adapters.AdapterPacientes;
-import com.kriverdevice.gestioncitas.interfaces.Main;
 import com.kriverdevice.gestioncitas.interfaces.ModulesListListener;
 import com.kriverdevice.gestioncitas.models.Pacientes;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class PacientesList extends Fragment implements ModulesListListener {
 
-    Main mainListener;
     RecyclerView mList;
     ArrayList<Pacientes> pacientes = new ArrayList<Pacientes>();
 
-    AdapterPacientes adapterPacientes;
-
-    public void setMainListener(Main mainListener) {
-        this.mainListener = mainListener;
-    }
-
     ModulesListListener onItemListClickListener;
+
+    AdapterPacientes adapterPacientes;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,19 +59,27 @@ public class PacientesList extends Fragment implements ModulesListListener {
     // Es informado para que realice el filtro sobre la lista
     @Override
     public void onSearch(String value) {
-        // TODO: Filtar el valor del array
-        Toast.makeText(getContext(), "Filtrar el valor: " + value, Toast.LENGTH_LONG).show();
+        if (value.isEmpty()) {
+            adapterPacientes.setDataSources(pacientes);
+            return;
+        }
+
+        // Clona el origen de datos de la lista y realiza el filtro por el valor pasado
+        ArrayList<Pacientes> fPaciente = (ArrayList<Pacientes>) pacientes.clone();
+
+        for (Iterator<Pacientes> i = fPaciente.iterator(); i.hasNext(); ) {
+            if (!i.next().getIdentificacion().contains(value)) {
+                i.remove();
+            }
+        }
+
+        adapterPacientes.setDataSources(fPaciente);
     }
 
     @Override
     public void onReloadList() {
-
         pacientes.clear();
-
-        // TODO: Llenar la lista de pacientes
-        for (int i = 0; i <= 20; i++) {
-            pacientes.add(new Pacientes(i, "David" + i + "", "Vergara", "123456789"));
-        }
+        pacientes.addAll(new Pacientes(getContext()).getAllPacientes());
         adapterPacientes.notifyDataSetChanged();
     }
 }

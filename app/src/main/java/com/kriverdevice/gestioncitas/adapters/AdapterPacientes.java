@@ -22,6 +22,11 @@ public class AdapterPacientes extends RecyclerView.Adapter<AdapterPacientes.View
         this.onItemListClickListener = onItemListClickListener;
     }
 
+    public void setDataSources(List<Pacientes> sourceDataModel) {
+        this.sourceDataModel = sourceDataModel;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.view_holder_list_pacientes, viewGroup, false);

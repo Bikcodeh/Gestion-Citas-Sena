@@ -43,4 +43,5 @@
     <string name="saved">Registro guardado</string>
     <string name="update">Registro actualizado</string>
     <string name="form_validate_message">Debe llenar todos los campos del formulario</string>
+    <string name="delete_record">Registro eliminado</string>
 </resources>

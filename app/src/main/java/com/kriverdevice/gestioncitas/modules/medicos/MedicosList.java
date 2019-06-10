@@ -67,7 +67,7 @@ public class MedicosList extends Fragment implements ModulesListListener {
         ArrayList<Medicos> fMedicos = (ArrayList<Medicos>) medicos.clone();
 
         for (Iterator<Medicos> i = fMedicos.iterator(); i.hasNext(); ) {
-            if (!i.next().getNombre().contains(value)) {
+            if (!i.next().getIdentificacion().contains(value)) {
                 i.remove();
             }
         }

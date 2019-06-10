@@ -14,12 +14,12 @@ import java.util.ArrayList;
 
 public class Medicos extends DatabaseHelper implements Parcelable {
 
+    private Context context;
+    private int id;
     private String nombre;
     private String apellido;
     private String identificacion;
     private int profesion;
-    private int id;
-    private Context context;
 
     //Nombre de la tabla MySQL
     private String tabla = "medicos";
