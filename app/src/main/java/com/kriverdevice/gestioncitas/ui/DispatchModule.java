@@ -87,6 +87,7 @@ public class DispatchModule extends Fragment implements TextWatcher, ModulesList
                 title = R.string.consultorios;
                 icon = R.mipmap.consultorio;
                 ((ConsultoriosList) mList).setOnItemListClickListener(this);
+                ((ConsultoriosForm) mForm).setModuleFormListener(this);
                 break;
         }
     }

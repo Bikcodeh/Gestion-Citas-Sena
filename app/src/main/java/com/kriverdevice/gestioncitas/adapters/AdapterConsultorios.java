@@ -22,6 +22,11 @@ public class AdapterConsultorios extends RecyclerView.Adapter<AdapterConsultorio
         this.onItemListClickListener = onItemListClickListener;
     }
 
+    public void setDataSources(List<Consultorios> sourceDataModel) {
+        this.sourceDataModel = sourceDataModel;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.view_holder_list_consultorio, viewGroup, false);

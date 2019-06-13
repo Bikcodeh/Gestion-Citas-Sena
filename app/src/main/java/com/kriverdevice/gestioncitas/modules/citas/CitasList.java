@@ -72,18 +72,6 @@ public class CitasList extends Fragment implements ModulesListListener {
 
         citas.clear();
 
-        // TODO: Llenar la lista de citas
-        for (int i = 0; i <= 20; i++) {
-            Citas cita = new Citas(i, i, i, i, "20 Enero", "8:50");
-            cita.setConsultorioAddress("Calle " + i + " Carrera " + i);
-            cita.setConsultorioName("Consultorio No " + i);
-            cita.setConsultorioPhone(String.valueOf(5 + i) + "7" + String.valueOf(5 * i) + "5" + String.valueOf(2 * i) + "8");
-            cita.setMedicoName("David " + i);
-            cita.setPacienteName("Crhistian " + i);
-            cita.setPacienteIdentification("1113" + i);
-            cita.setMedicoIdentification("2224" + i);
-            citas.add(cita);
-        }
 
         adapterCitas.notifyDataSetChanged();
     }

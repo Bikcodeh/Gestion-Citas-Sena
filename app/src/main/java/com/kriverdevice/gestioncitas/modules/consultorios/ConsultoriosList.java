@@ -1,6 +1,5 @@
 package com.kriverdevice.gestioncitas.modules.consultorios;
 
-
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -9,29 +8,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.kriverdevice.gestioncitas.R;
 import com.kriverdevice.gestioncitas.adapters.AdapterConsultorios;
-import com.kriverdevice.gestioncitas.interfaces.Main;
 import com.kriverdevice.gestioncitas.interfaces.ModulesListListener;
 import com.kriverdevice.gestioncitas.models.Consultorios;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ConsultoriosList extends Fragment implements ModulesListListener {
 
-    Main mainListener;
     RecyclerView mList;
     ArrayList<Consultorios> consultorios = new ArrayList<Consultorios>();
 
-    AdapterConsultorios adapterConsultorios;
-
-    public void setMainListener(Main mainListener) {
-        this.mainListener = mainListener;
-    }
-
     ModulesListListener onItemListClickListener;
+
+    AdapterConsultorios adapterConsultorios;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,18 +57,27 @@ public class ConsultoriosList extends Fragment implements ModulesListListener {
     // Es informado para que realice el filtro sobre la lista
     @Override
     public void onSearch(String value) {
-        // TODO: Filtar el valor del array
-        Toast.makeText(getContext(), "Filtrar el valor: " + value, Toast.LENGTH_LONG).show();
+        if (value.isEmpty()) {
+            adapterConsultorios.setDataSources(consultorios);
+            return;
+        }
+
+        // Clona el origen de datos de la lista y realiza el filtro por el valor pasado
+        ArrayList<Consultorios> fconsultorios = (ArrayList<Consultorios>) consultorios.clone();
+
+        for (Iterator<Consultorios> i = fconsultorios.iterator(); i.hasNext(); ) {
+            if (!i.next().getdescripcion().contains(value)) {
+                i.remove();
+            }
+        }
+
+        adapterConsultorios.setDataSources(fconsultorios);
     }
 
     @Override
     public void onReloadList() {
         consultorios.clear();
-
-        // TODO: Llenar la lista de citas
-        for (int i = 0; i <= 20; i++) {
-            consultorios.add(new Consultorios(i, "Consultorio", "Tef:  " + i, "Calle " + i + " Carrera " + i));
-        }
+        consultorios.addAll(new Consultorios(getContext()).getAllConsultorios());
         adapterConsultorios.notifyDataSetChanged();
     }
 }

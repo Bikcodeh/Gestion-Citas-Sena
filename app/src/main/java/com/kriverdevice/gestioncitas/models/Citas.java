@@ -1,10 +1,19 @@
 package com.kriverdevice.gestioncitas.models;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Citas implements Parcelable {
+import com.kriverdevice.gestioncitas.database.DatabaseHelper;
 
+import java.util.ArrayList;
+
+public class Citas extends DatabaseHelper implements Parcelable {
+
+    Context context;
     private int id;
     private int paciente_id;
     private int medico_id;
@@ -13,6 +22,70 @@ public class Citas implements Parcelable {
 
     String pacienteName, medicoName, consultorioName, consultorioPhone, consultorioAddress;
     String pacienteIdentification, medicoIdentification;
+
+    //Nombre de la tabla MySQL
+    private String tabla = "citas";
+
+    /*
+        PERSISTENCIA EN LA BASE DE DATOS
+
+     */
+
+    /*
+     * Función para insertar medicos, al momento de llamar la función se debe
+     * pasar como argumento un objeto de tipo Medico
+     */
+    public long create() {
+        /*
+         * Valores es un objeto de la clase ContentValues, mediante el método
+         * put asignamos un valor a cada campo de la tabla, los valores son
+         * obtenidos de un objeto tipo medico el cual es pasado como argumento
+         * al momento de llamar la función insertarMedico(Medico medico) desde una Activity"
+         */
+        ContentValues valores = new ContentValues();
+        valores.put("paciente_id", this.paciente_id);
+        valores.put("medico_id", this.medico_id);
+        valores.put("consultorio_id", this.consultorio_id);
+        valores.put("fecha", this.fecha);
+        valores.put("hora", this.hora);
+        /*
+         * invocación de la función insertarRegistro a la cual le pasan
+         * dos argumentos, el objeto valores y "medicos" que corresponde al
+         * Nombre de la tabla en SQLite
+         */
+        return this.insertarRegistro(valores, tabla);
+    }
+
+    public ArrayList<Citas> getAllCitas() {
+        /* lstPaciente ArrayList para almacenar todos los medicos obtenidos en la busqueda*/
+        ArrayList<Citas> lstCitas = new ArrayList<Citas>();
+        /* Instrucción SQL para obtener todos los medicos*/
+        String selectQuery = "";
+        selectQuery += "SELECT c.id, c.paciente_id, c.medico_id, c.consultorio_id, c.fecha, c.hora ";
+        selectQuery += "FROM citas c";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) { /* moveToFirst() devuelve TRUE en caso de haber realizado el movimiento */
+            do {
+                /* Creación de un objeto de la clase Medico */
+                Citas citas = new Citas(this.context);
+
+                citas.id = c.getInt(0);
+                citas.paciente_id = c.getInt(1);
+                citas.medico_id = c.getInt(2);
+                citas.consultorio_id = c.getInt(3);
+                citas.fecha = c.getString(4);
+                citas.hora = c.getString(5);
+
+                lstCitas.add(citas);
+            } while (c.moveToNext()); //Mover el cursor a la siguiente posición
+        }
+        db.close(); //Cierre de la conexión
+        return lstCitas; //Retorno del listado de medicos
+    }
+
 
     public String getPacienteIdentification() {
         return pacienteIdentification;
@@ -122,24 +195,14 @@ public class Citas implements Parcelable {
         this.hora = hora;
     }
 
-    public Citas() {
+    public Citas(Context context) {
+        super(context);
+        this.context = context;
     }
 
     public Citas(Parcel in) {
+        super(null);
         readFromParcel(in);
-    }
-
-    public Citas Citas(int paciente_id, int consultorio_id, int medico_id, String fecha, String hora) {
-        return new Citas(0, paciente_id, consultorio_id, medico_id, fecha, hora);
-    }
-
-    public Citas(int id, int paciente_id, int consultorio_id, int medico_id, String fecha, String hora) {
-        this.id = id;
-        this.paciente_id = paciente_id;
-        this.medico_id = medico_id;
-        this.consultorio_id = consultorio_id;
-        this.fecha = fecha;
-        this.hora = hora;
     }
 
     @Override
