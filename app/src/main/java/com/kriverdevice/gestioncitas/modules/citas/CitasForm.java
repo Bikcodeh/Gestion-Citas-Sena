@@ -17,6 +17,8 @@ import com.kriverdevice.gestioncitas.Constants;
 import com.kriverdevice.gestioncitas.R;
 import com.kriverdevice.gestioncitas.interfaces.ModuleFormListener;
 import com.kriverdevice.gestioncitas.models.Citas;
+import com.kriverdevice.gestioncitas.models.Medicos;
+import com.kriverdevice.gestioncitas.models.Pacientes;
 
 public class CitasForm extends Fragment implements ModuleFormListener {
 
@@ -70,6 +72,8 @@ public class CitasForm extends Fragment implements ModuleFormListener {
 
     private void fillForm(Parcelable data, View v) {
         Citas cita = (Citas) data;
+        Medicos medicoInfo = cita.getMedico();
+        Pacientes pacienteInfo = cita.getPaciente();
 
         pacienteId = v.findViewById(R.id.form_citas_paciente_identificacion);
         medicoId = v.findViewById(R.id.form_citas_medico_identificacion);
@@ -82,11 +86,11 @@ public class CitasForm extends Fragment implements ModuleFormListener {
         consultorios = v.findViewById(R.id.form_citas_consultorio_name);
 
         pacienteId.setText(cita.getPacienteIdentification());
-        medicoId.setText(cita.getMedicoIdentification());
+        medicoId.setText(medicoInfo.getIdentificacion());
         fecha.setText(cita.getFecha());
         hora.setText(cita.getHora());
-        pacienteName.setText(cita.getPacienteName());
-        medicoName.setText(cita.getMedicoName());
+        pacienteName.setText(pacienteInfo.getNombre());
+        medicoName.setText(medicoInfo.getNombre() + " " + medicoInfo.getApellido());
 
         // TODO: Poblar el combo y buscar la profesion.
         // profesiones.setText("Profesion");

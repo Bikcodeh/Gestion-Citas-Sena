@@ -259,6 +259,19 @@ public class Medicos extends DatabaseHelper implements Parcelable {
         Log.d("***->", "Profesion Id: " + this.profesion);
     }
 
+    public void setProfesion(int id_profession) {
+        Especialidades especialidad = new Especialidades(this.context); //.getEspecialidad(id_profession);
+
+        String descProfession = especialidad
+                .getEspecialidad(id_profession);
+
+        this.profesion = especialidad
+                .getId(descProfession);
+
+        Log.d("***->", "Profesion Desc: " + descProfession);
+        Log.d("***->", "Profesion Id: " + this.profesion);
+    }
+
     public String getProfesion() {
         return new Especialidades(this.context).getEspecialidad(this.profesion);
     }

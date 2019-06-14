@@ -9,6 +9,9 @@ import android.widget.TextView;
 import com.kriverdevice.gestioncitas.R;
 import com.kriverdevice.gestioncitas.interfaces.ModulesListListener;
 import com.kriverdevice.gestioncitas.models.Citas;
+import com.kriverdevice.gestioncitas.models.Consultorios;
+import com.kriverdevice.gestioncitas.models.Medicos;
+import com.kriverdevice.gestioncitas.models.Pacientes;
 
 import java.util.List;
 
@@ -31,12 +34,16 @@ public class AdapterCitas extends RecyclerView.Adapter<AdapterCitas.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
 
-        viewHolder.consultorioAddress.setText(sourceDataModel.get(i).getConsultorioAddress());
-        viewHolder.consultorioName.setText(sourceDataModel.get(i).getConsultorioName());
-        viewHolder.consultorioPhone.setText(sourceDataModel.get(i).getConsultorioPhone());
+        Medicos medico = sourceDataModel.get(i).getMedico();
+        Pacientes paciente = sourceDataModel.get(i).getPaciente();
+        Consultorios consultorio = sourceDataModel.get(i).getConsultorio();
+
+        viewHolder.consultorioAddress.setText(consultorio.getdireccion());
+        viewHolder.consultorioName.setText(consultorio.getdescripcion());
+        viewHolder.consultorioPhone.setText(consultorio.gettelefono());
         viewHolder.fechaHora.setText(sourceDataModel.get(i).getHoraFecha());
-        viewHolder.medicoName.setText(sourceDataModel.get(i).getMedicoName());
-        viewHolder.pacienteName.setText(sourceDataModel.get(i).getPacienteName());
+        viewHolder.medicoName.setText(medico.getNombre() + " " + medico.getApellido());
+        viewHolder.pacienteName.setText(paciente.getNombre() + " " + paciente.getApellido());
         viewHolder.dataModel = sourceDataModel.get(i);
     }
 

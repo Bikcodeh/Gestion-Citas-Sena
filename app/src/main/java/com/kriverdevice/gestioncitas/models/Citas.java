@@ -28,7 +28,6 @@ public class Citas extends DatabaseHelper implements Parcelable {
 
     /*
         PERSISTENCIA EN LA BASE DE DATOS
-
      */
 
     /*
@@ -55,6 +54,56 @@ public class Citas extends DatabaseHelper implements Parcelable {
          */
         return this.insertarRegistro(valores, tabla);
     }
+
+    /*
+     * Función actualizarMedico sirve para actualizar los valores de un medico,
+     * tiene un parametro de tipo medico, el cual es pasado como argumento al
+     * momento de llamar el la función
+     */
+    public int update() {
+        /*
+         * SQLiteDatabase db = this.getWritableDatabase(); Crea o abre una base
+         * de datos que se usara para lectura y escritura usando instrucciones
+         * SQL.
+         */
+        SQLiteDatabase db = this.getWritableDatabase();
+        /*
+         * valores es un objeto de la clase ContentValues, mediante el método
+         * put asignamos un valor a cada campo de la tabla, los valores
+         * son obtenidos del parametro tipo Paciente, los
+         * valores son pasados como argumentos al momento de invocar la función
+         * actualizarPaciente
+         */
+        ContentValues valores = new ContentValues();
+        valores.put("paciente_id", this.paciente_id);
+        valores.put("medico_id", this.medico_id);
+        valores.put("consultorio_id", this.consultorio_id);
+        valores.put("fecha", this.fecha);
+        valores.put("hora", this.hora);
+        /*
+         * La función update sirve para actualizar registros en una tabla,
+         * recibe como argumentos el nombre de la tabla, los nuevos valores, una
+         * condición de actualización y opcionalmente un arreglo con valores de
+         * reemplazo para la condición
+         */
+        //String[] strArray = { "" + id };
+        int res = db.update(this.tabla, valores, "id=" + this.id, null);
+        db.close(); // Cierre de la conexión
+        return res; // Retorno del número de registros afectados
+    }
+
+    public int deleteBy(int id) {
+        /*
+         * SQLiteDatabase db = this.getWritableDatabase(); Crea o abre una base
+         * de datos que se usara para lectura y escritura usando instrucciones
+         * SQL.
+         */
+        SQLiteDatabase db = this.getWritableDatabase();
+        int res = db.delete(this.tabla, "id=" + id, null);
+        db.close(); // Cierre de la conexión
+        return res; // Retorno del número de registros afectados
+    }
+
 
     public ArrayList<Citas> getAllCitas() {
         /* lstPaciente ArrayList para almacenar todos los medicos obtenidos en la busqueda*/
@@ -95,56 +144,107 @@ public class Citas extends DatabaseHelper implements Parcelable {
         this.pacienteIdentification = pacienteIdentification;
     }
 
-    public String getMedicoIdentification() {
-        return medicoIdentification;
-    }
+    public Medicos getMedico() {
 
-    public void setMedicoIdentification(String medicoIdentification) {
-        this.medicoIdentification = medicoIdentification;
+        Medicos medicos = null;
+
+        String selectQuery = "";
+        selectQuery += "SELECT m.id, m.identificacion, m.nombres, m.apellidos, e.id, e.descripcion ";
+        selectQuery += "FROM medicos m, especialidads e WHERE m.especialidad_id = e.id3 ";
+        selectQuery += "AND m.id=" + this.medico_id;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = null;
+
+        c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            medicos = new Medicos(this.context);
+
+            medicos.setId(c.getInt(0));
+            medicos.setIdentificacion(c.getString(1));
+            medicos.setNombre(c.getString(2));
+            medicos.setApellido(c.getString(3));
+            medicos.setProfesion(c.getInt(4));
+        }
+        db.close(); // Cierre de la conexión
+        return medicos; // Retorno del medico obtenido en la consulta
     }
 
     public String getHoraFecha() {
         return fecha + " / " + hora;
     }
 
-    public String getPacienteName() {
-        return pacienteName;
+    public Pacientes getPaciente() {
+        Pacientes pacientes = null;
+        /* Instrucción SQL para buscar medicos por id, tenga en cuenta el orden
+         de las columnas, asi mismo tendra que acceder a sus valores */
+        String selectQuery = "";
+        selectQuery += "SELECT p.id, p.identificacion, p.nombres, p.apellidos";
+        selectQuery += "FROM pacientes p WHERE p.id ='" + this.paciente_id + "'";
+
+        /*
+         * SQLiteDatabase db = this.getWritableDatabase(); Crea o abre una base
+         * de datos que se usara para lectura y escritura usando instrucciones
+         * SQL.
+         */
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = null;
+        /*
+         * El método rawQuery() de la clase SQLiteDatabase, recibe como
+         * argumento un comando SQL a ejecutar, retorna un Cursor
+         */
+        c = db.rawQuery(selectQuery, null);
+        /*
+         * moveToFirst(): mueve el puntero del cursor al primer registro
+         * obtenido.
+         */
+        if (c.moveToFirst()) {
+            pacientes = new Pacientes(this.context);
+            pacientes.setId(c.getInt(0));
+            pacientes.setIdentificacion(c.getString(1));
+            pacientes.setNombre(c.getString(2));
+            pacientes.setApellido(c.getString(3));
+        }
+        db.close(); // Cierre de la conexión
+        return pacientes; // Retorno del medico obtenido en la consulta
     }
 
-    public void setPacienteName(String pacienteName) {
-        this.pacienteName = pacienteName;
-    }
 
-    public String getMedicoName() {
-        return medicoName;
-    }
+    public Consultorios getConsultorio() {
 
-    public void setMedicoName(String medicoName) {
-        this.medicoName = medicoName;
-    }
+        Consultorios consultorios = null;
+        /* Instrucción SQL para buscar medicos por id, tenga en cuenta el orden
+         de las columnas, asi mismo tendra que acceder a sus valores */
+        String selectQuery = "";
+        selectQuery += "SELECT c.id, c.descripcion, c.telefono, c.direccion";
+        selectQuery += "FROM consultorios c WHERE c.id ='" + this.consultorio_id + "'";
 
-    public String getConsultorioName() {
-        return consultorioName;
-    }
-
-    public void setConsultorioName(String consultorioName) {
-        this.consultorioName = consultorioName;
-    }
-
-    public String getConsultorioPhone() {
-        return consultorioPhone;
-    }
-
-    public void setConsultorioPhone(String consultorioPhone) {
-        this.consultorioPhone = consultorioPhone;
-    }
-
-    public String getConsultorioAddress() {
-        return consultorioAddress;
-    }
-
-    public void setConsultorioAddress(String consultorioAddress) {
-        this.consultorioAddress = consultorioAddress;
+        /*
+         * SQLiteDatabase db = this.getWritableDatabase(); Crea o abre una base
+         * de datos que se usara para lectura y escritura usando instrucciones
+         * SQL.
+         */
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = null;
+        /*
+         * El método rawQuery() de la clase SQLiteDatabase, recibe como
+         * argumento un comando SQL a ejecutar, retorna un Cursor
+         */
+        c = db.rawQuery(selectQuery, null);
+        /*
+         * moveToFirst(): mueve el puntero del cursor al primer registro
+         * obtenido.
+         */
+        if (c.moveToFirst()) {
+            consultorios = new Consultorios(this.context);
+            consultorios.setId(c.getInt(0));
+            consultorios.setdescripcion(c.getString(1));
+            consultorios.settelefono(c.getString(3));
+            consultorios.setdescripcion(c.getString(2));
+        }
+        db.close(); // Cierre de la conexión
+        return consultorios; // Retorno del medico obtenido en la consulta
     }
 
     public int getId() {
