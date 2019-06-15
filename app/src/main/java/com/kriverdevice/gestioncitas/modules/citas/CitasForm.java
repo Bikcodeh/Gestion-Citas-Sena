@@ -116,12 +116,7 @@ public class CitasForm extends Fragment implements ModuleFormListener {
             medicoId.setSelection(0);
             consultorios.setSelection(0);
 
-            pacienteSelected = ((Pacientes) pacienteId.getSelectedItem());
-            medicoSelected = ((Medicos) medicoId.getSelectedItem());
-            consultorioSelected = ((Consultorios) consultorios.getSelectedItem());
-
-            pacienteName.setText(pacienteSelected.getNombre() + " " + pacienteSelected.getApellido());
-            medicoName.setText(medicoSelected.getNombre() + " " + medicoSelected.getApellido());
+            setSpinnerdata();
 
             fecha.setText("");
             hora.setText("");
@@ -130,6 +125,16 @@ public class CitasForm extends Fragment implements ModuleFormListener {
             this.operaction = Constants.MODULE_OPERATION_NEW;
         }
 
+    }
+
+    private void setSpinnerdata() {
+        pacienteSelected = ((Pacientes) pacienteId.getSelectedItem());
+        medicoSelected = ((Medicos) medicoId.getSelectedItem());
+        consultorioSelected = ((Consultorios) consultorios.getSelectedItem());
+
+        pacienteName.setText(pacienteSelected.getNombre() + " " + pacienteSelected.getApellido());
+        medicoName.setText(medicoSelected.getNombre() + " " + medicoSelected.getApellido());
+        profesiones.setText(medicoSelected.getProfesion());
     }
 
     @Override
@@ -152,12 +157,7 @@ public class CitasForm extends Fragment implements ModuleFormListener {
         medicoId.setSelection(0);
         consultorios.setSelection(0);
 
-        pacienteSelected = ((Pacientes) pacienteId.getSelectedItem());
-        medicoSelected = ((Medicos) medicoId.getSelectedItem());
-        consultorioSelected = ((Consultorios) consultorios.getSelectedItem());
-
-        pacienteName.setText(pacienteSelected.getNombre() + " " + pacienteSelected.getApellido());
-        medicoName.setText(medicoSelected.getNombre() + " " + medicoSelected.getApellido());
+        setSpinnerdata();
 
         fecha.setText("");
         hora.setText("");
@@ -229,14 +229,14 @@ public class CitasForm extends Fragment implements ModuleFormListener {
 
         fecha.setText(cita.getFecha());
         hora.setText(cita.getHora());
-        pacienteName.setText(pacienteInfo.getNombre());
-        medicoName.setText(medicoInfo.getNombre() + " " + medicoInfo.getApellido());
-        profesiones.setText("Profesion");
 
-        // TODO: Poblar el combo y buscar la profesion.
+
+        // TODO: realizar la busqueda de los ids del objecto enviado y asignarselos a los spinner's.
         // consultorios.setSelection(0);
-        // pacienteId.setText(pacienteInfo.getIdentificacion());
-        // medicoId.setText(medicoInfo.getIdentificacion());
+        // pacienteId.setSelection(0);
+        // medicoId.setSelection(0);
+
+        setSpinnerdata();
 
     }
 
