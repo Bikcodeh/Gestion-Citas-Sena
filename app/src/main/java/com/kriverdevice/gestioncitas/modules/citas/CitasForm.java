@@ -1,6 +1,8 @@
 package com.kriverdevice.gestioncitas.modules.citas;
 
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -11,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.kriverdevice.gestioncitas.Constants;
@@ -22,10 +26,13 @@ import com.kriverdevice.gestioncitas.models.Consultorios;
 import com.kriverdevice.gestioncitas.models.Medicos;
 import com.kriverdevice.gestioncitas.models.Pacientes;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 import static android.widget.Toast.LENGTH_SHORT;
 import static com.kriverdevice.gestioncitas.R.layout.support_simple_spinner_dropdown_item;
 
-public class CitasForm extends Fragment implements ModuleFormListener {
+public class CitasForm extends Fragment implements ModuleFormListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     ModuleFormListener moduleFormListener;
 
@@ -57,6 +64,9 @@ public class CitasForm extends Fragment implements ModuleFormListener {
         medicoId = v.findViewById(R.id.form_citas_medico_identificacion);
         fecha = v.findViewById(R.id.form_citas_fecha);
         hora = v.findViewById(R.id.form_citas_hora);
+
+        fecha.setOnClickListener(onClickListener);
+        hora.setOnClickListener(onClickListener);
 
         pacienteName = v.findViewById(R.id.form_citas_paciente_name);
         medicoName = v.findViewById(R.id.form_citas_medico_name);
@@ -189,15 +199,19 @@ public class CitasForm extends Fragment implements ModuleFormListener {
         // TODO: SAVE
         String respMsg = "TODO: SAVE";
 
-        Citas citas = new Citas(getContext());
-        Consultorios consultorioId = consultorio.getByDescripcion(consultorios.getSelectedItem().toString());
+        pacienteSelected = ((Pacientes) pacienteId.getSelectedItem());
+        medicoSelected = ((Medicos) medicoId.getSelectedItem());
+        consultorioSelected = ((Consultorios) consultorios.getSelectedItem());
 
-        /*
-        citas.setConsultorio_id( consultorioId.getId() );
+        Citas citas = new Citas(getContext());
+
+        citas.setPaciente_id(pacienteSelected.getId());
+        citas.setMedico_id(medicoSelected.getId());
+        citas.setConsultorio_id(consultorioSelected.getId());
+        // medico.getByIdentificacion( medicoId.getText().toString() ).getId()
+
         citas.setFecha( fecha.getText().toString() );
         citas.setHora( hora.getText().toString() );
-        citas.setMedico_id( medico.getByIdentificacion( medicoId.getText().toString() ).getId() );
-        */
 
         switch (this.operaction) {
 
@@ -240,12 +254,59 @@ public class CitasForm extends Fragment implements ModuleFormListener {
 
     }
 
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+
+            Calendar calendar;
+
+            switch (v.getId()) {
+
+                case R.id.form_citas_hora:
+                    calendar = Calendar.getInstance();
+                    int hora = calendar.get(Calendar.HOUR_OF_DAY);
+                    int minutos = calendar.get(Calendar.MINUTE);
+
+                    TimePickerDialog horaDialog = new TimePickerDialog(
+                            getContext(),
+                            CitasForm.this,
+                            hora,
+                            minutos,
+                            false);
+
+                    horaDialog.show();
+                    break;
+
+                case R.id.form_citas_fecha:
+                    calendar = Calendar.getInstance(TimeZone.getDefault());
+                    DatePickerDialog fechaDialog = new DatePickerDialog(
+                            getContext(),
+                            CitasForm.this,
+                            calendar.get(Calendar.YEAR),
+                            calendar.get(Calendar.MONTH),
+                            calendar.get(Calendar.DAY_OF_MONTH));
+                    fechaDialog.show();
+                    break;
+            }
+        }
+    };
+
     public void setModuleFormListener(ModuleFormListener moduleFormListener) {
         this.moduleFormListener = moduleFormListener;
     }
 
     @Override
-    public void onBack() {
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        fecha.setText(dayOfMonth + "/" + month + "/" + year);
     }
 
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        hora.setText(hourOfDay + ":" + minute);
+    }
+
+    @Override
+    public void onBack() {
+    }
 }

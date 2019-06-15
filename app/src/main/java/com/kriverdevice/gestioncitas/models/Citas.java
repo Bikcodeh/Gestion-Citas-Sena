@@ -137,7 +137,7 @@ public class Citas extends DatabaseHelper implements Parcelable {
 
         String selectQuery = "";
         selectQuery += "SELECT m.id, m.identificacion, m.nombres, m.apellidos, e.id, e.descripcion ";
-        selectQuery += "FROM medicos m, especialidads e WHERE m.especialidad_id = e.id3 ";
+        selectQuery += "FROM medicos m, especialidads e WHERE m.especialidad_id = e.id ";
         selectQuery += "AND m.id=" + this.medico_id;
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -163,7 +163,7 @@ public class Citas extends DatabaseHelper implements Parcelable {
         /* Instrucción SQL para buscar medicos por id, tenga en cuenta el orden
          de las columnas, asi mismo tendra que acceder a sus valores */
         String selectQuery = "";
-        selectQuery += "SELECT p.id, p.identificacion, p.nombres, p.apellidos";
+        selectQuery += "SELECT p.id, p.identificacion, p.nombres, p.apellidos ";
         selectQuery += "FROM pacientes p WHERE p.id ='" + this.paciente_id + "'";
 
         /*
@@ -199,7 +199,7 @@ public class Citas extends DatabaseHelper implements Parcelable {
         /* Instrucción SQL para buscar medicos por id, tenga en cuenta el orden
          de las columnas, asi mismo tendra que acceder a sus valores */
         String selectQuery = "";
-        selectQuery += "SELECT c.id, c.descripcion, c.telefono, c.direccion";
+        selectQuery += "SELECT c.id, c.descripcion, c.telefono, c.direccion ";
         selectQuery += "FROM consultorios c WHERE c.id ='" + this.consultorio_id + "'";
 
         /*
