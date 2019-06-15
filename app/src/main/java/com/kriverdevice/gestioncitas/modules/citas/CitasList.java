@@ -8,29 +8,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.kriverdevice.gestioncitas.R;
 import com.kriverdevice.gestioncitas.adapters.AdapterCitas;
-import com.kriverdevice.gestioncitas.interfaces.Main;
 import com.kriverdevice.gestioncitas.interfaces.ModulesListListener;
 import com.kriverdevice.gestioncitas.models.Citas;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class CitasList extends Fragment implements ModulesListListener {
 
-    Main mainListener;
     RecyclerView mList;
     ArrayList<Citas> citas = new ArrayList<Citas>();
 
-    AdapterCitas adapterCitas;
-
-    public void setMainListener(Main mainListener) {
-        this.mainListener = mainListener;
-    }
-
     ModulesListListener onItemListClickListener;
+
+    AdapterCitas adapterCitas;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,16 +57,28 @@ public class CitasList extends Fragment implements ModulesListListener {
     // Es informado para que realice el filtro sobre la lista
     @Override
     public void onSearch(String value) {
-        // TODO: Filtar el valor del array
-        Toast.makeText(getContext(), "Filtrar el valor: " + value, Toast.LENGTH_LONG).show();
+        if (value.isEmpty()) {
+            adapterCitas.setDataSources(citas);
+            return;
+        }
+
+        // Clona el origen de datos de la lista y realiza el filtro por el valor pasado
+        ArrayList<Citas> fcitas = (ArrayList<Citas>) citas.clone();
+
+        for (Iterator<Citas> i = fcitas.iterator(); i.hasNext(); ) {
+            if (!i.next().getPaciente().getIdentificacion().contains(value)) {
+                i.remove();
+            }
+        }
+
+        adapterCitas.setDataSources(fcitas);
     }
 
     @Override
     public void onReloadList() {
 
         citas.clear();
-
-
+        citas.addAll(new Citas(getContext()).getAllCitas());
         adapterCitas.notifyDataSetChanged();
     }
 

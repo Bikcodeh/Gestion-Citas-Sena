@@ -37,13 +37,21 @@
 
                     app:hintEnabled="true">
 
-                    <android.support.v7.widget.AppCompatEditText
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/form_citas_paciente_identificacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
+                        android:spinnerMode="dialog" />
+
+                    <!-- <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/form_citas_paciente_identificacion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:inputType="number"
-                        android:textSize="14dp" />
+                        android:textSize="14dp" /> -->
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
@@ -87,13 +95,20 @@
 
                     app:hintEnabled="true">
 
-                    <android.support.v7.widget.AppCompatEditText
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/form_citas_medico_identificacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
+                        android:spinnerMode="dialog" />
+
+                    <!-- <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/form_citas_medico_identificacion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:inputType="number"
-                        android:textSize="14dp" />
+                        android:textSize="14dp" /> -->
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
         </android.support.design.card.MaterialCardView>
@@ -128,9 +143,10 @@
                         android:fontFamily="sans-serif-light"
                         android:text="@string/consultorios" />
 
-                    <Spinner
+                    <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/form_citas_consultorio_name"
-                        style="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem"
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
+                        android:spinnerMode="dialog"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"

@@ -251,6 +251,10 @@ public class Pacientes extends DatabaseHelper implements Parcelable {
         }
     };
 
+    public String toString() {
+        return this.identificacion;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

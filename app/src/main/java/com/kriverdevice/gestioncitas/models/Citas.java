@@ -20,9 +20,6 @@ public class Citas extends DatabaseHelper implements Parcelable {
     private int consultorio_id;
     private String fecha, hora;
 
-    String pacienteName, medicoName, consultorioName, consultorioPhone, consultorioAddress;
-    String pacienteIdentification, medicoIdentification;
-
     //Nombre de la tabla MySQL
     private String tabla = "citas";
 
@@ -104,7 +101,6 @@ public class Citas extends DatabaseHelper implements Parcelable {
         return res; // Retorno del número de registros afectados
     }
 
-
     public ArrayList<Citas> getAllCitas() {
         /* lstPaciente ArrayList para almacenar todos los medicos obtenidos en la busqueda*/
         ArrayList<Citas> lstCitas = new ArrayList<Citas>();
@@ -135,15 +131,6 @@ public class Citas extends DatabaseHelper implements Parcelable {
         return lstCitas; //Retorno del listado de medicos
     }
 
-
-    public String getPacienteIdentification() {
-        return pacienteIdentification;
-    }
-
-    public void setPacienteIdentification(String pacienteIdentification) {
-        this.pacienteIdentification = pacienteIdentification;
-    }
-
     public Medicos getMedico() {
 
         Medicos medicos = null;
@@ -169,10 +156,6 @@ public class Citas extends DatabaseHelper implements Parcelable {
         }
         db.close(); // Cierre de la conexión
         return medicos; // Retorno del medico obtenido en la consulta
-    }
-
-    public String getHoraFecha() {
-        return fecha + " / " + hora;
     }
 
     public Pacientes getPaciente() {
@@ -209,7 +192,6 @@ public class Citas extends DatabaseHelper implements Parcelable {
         db.close(); // Cierre de la conexión
         return pacientes; // Retorno del medico obtenido en la consulta
     }
-
 
     public Consultorios getConsultorio() {
 
@@ -295,6 +277,10 @@ public class Citas extends DatabaseHelper implements Parcelable {
         this.hora = hora;
     }
 
+    public String getHoraFecha() {
+        return fecha + " / " + hora;
+    }
+
     public Citas(Context context) {
         super(context);
         this.context = context;
@@ -318,12 +304,6 @@ public class Citas extends DatabaseHelper implements Parcelable {
         dest.writeInt(this.consultorio_id);
         dest.writeString(this.fecha);
         dest.writeString(this.hora);
-
-        dest.writeString(this.pacienteName);
-        dest.writeString(this.medicoName);
-        dest.writeString(this.consultorioName);
-        dest.writeString(this.consultorioAddress);
-        dest.writeString(this.consultorioPhone);
     }
 
     private void readFromParcel(Parcel in) {
@@ -333,12 +313,6 @@ public class Citas extends DatabaseHelper implements Parcelable {
         this.consultorio_id = in.readInt();
         this.fecha = in.readString();
         this.hora = in.readString();
-
-        this.pacienteName = in.readString();
-        this.medicoName = in.readString();
-        this.consultorioName = in.readString();
-        this.consultorioAddress = in.readString();
-        this.consultorioPhone = in.readString();
     }
 
     public static final Creator<Citas> CREATOR = new Creator<Citas>() {

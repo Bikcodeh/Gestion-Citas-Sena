@@ -215,6 +215,10 @@ public class Consultorios extends DatabaseHelper implements Parcelable {
         readFromParcel(in);
     }
 
+    public String toString() {
+        return this.descripcion;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

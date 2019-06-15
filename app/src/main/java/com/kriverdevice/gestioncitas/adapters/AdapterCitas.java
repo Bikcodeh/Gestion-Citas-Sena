@@ -25,6 +25,11 @@ public class AdapterCitas extends RecyclerView.Adapter<AdapterCitas.ViewHolder> 
         this.onItemListClickListener = onItemListClickListener;
     }
 
+    public void setDataSources(List<Citas> sourceDataModel) {
+        this.sourceDataModel = sourceDataModel;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.view_holder_list_citas, viewGroup, false);
