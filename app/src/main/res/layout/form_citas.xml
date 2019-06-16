@@ -39,19 +39,11 @@
 
                     <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/form_citas_paciente_identificacion"
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:spinnerMode="dialog" />
 
-                    <!-- <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/form_citas_paciente_identificacion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:inputType="number"
-                        android:textSize="14dp" /> -->
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
@@ -97,18 +89,11 @@
 
                     <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/form_citas_medico_identificacion"
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:spinnerMode="dialog" />
 
-                    <!-- <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/form_citas_medico_identificacion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:inputType="number"
-                        android:textSize="14dp" /> -->
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
         </android.support.design.card.MaterialCardView>
@@ -146,12 +131,11 @@
                     <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/form_citas_consultorio_name"
                         style="@style/Widget.AppCompat.Spinner.Underlined"
-                        android:spinnerMode="dialog"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
                         android:fontFamily="sans-serif-light"
-                        android:textSize="14dp" />
+                        android:spinnerMode="dialog" />
 
                 </LinearLayout>
 
@@ -168,7 +152,8 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
-                        android:editable="false"
+                        android:inputType="none"
+                        android:focusable="false"
                         android:fontFamily="sans-serif-light"
                         android:gravity="center"
                         android:hint="@string/form_fecha"
@@ -181,7 +166,8 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
-                        android:editable="false"
+                        android:inputType="none"
+                        android:focusable="false"
                         android:fontFamily="sans-serif-light"
                         android:gravity="center"
                         android:hint="@string/form_hora"

@@ -80,6 +80,7 @@ public class DispatchModule extends Fragment implements TextWatcher, ModulesList
                 title = R.string.citas;
                 icon = R.mipmap.cita;
                 ((CitasList) mList).setOnItemListClickListener(this);
+                ((CitasForm) mForm).setModuleFormListener(this);
                 break;
             case Constants.MODULE_CONSULTORIOS:
                 mList = new ConsultoriosList();

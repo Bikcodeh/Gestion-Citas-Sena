@@ -223,7 +223,7 @@ public class Citas extends DatabaseHelper implements Parcelable {
             consultorios.setId(c.getInt(0));
             consultorios.setdescripcion(c.getString(1));
             consultorios.settelefono(c.getString(3));
-            consultorios.setdescripcion(c.getString(2));
+            consultorios.setdireccion(c.getString(2));
         }
         db.close(); // Cierre de la conexión
         return consultorios; // Retorno del medico obtenido en la consulta

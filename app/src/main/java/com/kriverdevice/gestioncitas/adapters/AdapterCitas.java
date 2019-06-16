@@ -52,7 +52,6 @@ public class AdapterCitas extends RecyclerView.Adapter<AdapterCitas.ViewHolder> 
         viewHolder.dataModel = sourceDataModel.get(i);
     }
 
-
     @Override
     public int getItemCount() {
         return this.sourceDataModel.size();

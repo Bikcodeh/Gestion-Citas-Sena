@@ -12,6 +12,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -26,13 +27,14 @@ import com.kriverdevice.gestioncitas.models.Consultorios;
 import com.kriverdevice.gestioncitas.models.Medicos;
 import com.kriverdevice.gestioncitas.models.Pacientes;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static com.kriverdevice.gestioncitas.R.layout.support_simple_spinner_dropdown_item;
 
-public class CitasForm extends Fragment implements ModuleFormListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class CitasForm extends Fragment implements ModuleFormListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
 
     ModuleFormListener moduleFormListener;
 
@@ -56,22 +58,30 @@ public class CitasForm extends Fragment implements ModuleFormListener, DatePicke
     ArrayAdapter<Pacientes> pacientesList;
     ArrayAdapter<Consultorios> consultoriosList;
 
+    ArrayList<Medicos> medicosListData;
+    ArrayList<Pacientes> pacientesListData;
+    ArrayList<Consultorios> consultoriosListData;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.form_citas, container, false);
         pacienteId = v.findViewById(R.id.form_citas_paciente_identificacion);
         medicoId = v.findViewById(R.id.form_citas_medico_identificacion);
+        consultorios = v.findViewById(R.id.form_citas_consultorio_name);
         fecha = v.findViewById(R.id.form_citas_fecha);
         hora = v.findViewById(R.id.form_citas_hora);
 
         fecha.setOnClickListener(onClickListener);
         hora.setOnClickListener(onClickListener);
 
+        medicoId.setOnItemSelectedListener(this);
+        pacienteId.setOnItemSelectedListener(this);
+        consultorios.setOnItemSelectedListener(this);
+
         pacienteName = v.findViewById(R.id.form_citas_paciente_name);
         medicoName = v.findViewById(R.id.form_citas_medico_name);
         profesiones = v.findViewById(R.id.form_citas_medico_profesion);
-        consultorios = v.findViewById(R.id.form_citas_consultorio_name);
         return v;
     }
 
@@ -83,16 +93,20 @@ public class CitasForm extends Fragment implements ModuleFormListener, DatePicke
         paciente = new Pacientes(getContext());
         medico = new Medicos(getContext());
 
+        medicosListData = medico.getAllMedicos();
+        pacientesListData = paciente.getAllPacientes();
+        consultoriosListData = consultorio.getAllConsultorios();
+
         medicosList = new ArrayAdapter<Medicos>(
                 this.getContext(),
                 support_simple_spinner_dropdown_item,
-                medico.getAllMedicos()
+                medicosListData
         );
 
         pacientesList = new ArrayAdapter<Pacientes>(
                 this.getContext(),
                 support_simple_spinner_dropdown_item,
-                paciente.getAllPacientes()
+                pacientesListData
         );
 
         consultoriosList = new ArrayAdapter<Consultorios>(
@@ -125,16 +139,12 @@ public class CitasForm extends Fragment implements ModuleFormListener, DatePicke
             pacienteId.setSelection(0);
             medicoId.setSelection(0);
             consultorios.setSelection(0);
-
             setSpinnerdata();
-
             fecha.setText("");
             hora.setText("");
-
             // Establece el flag de la operacion que se realiza
             this.operaction = Constants.MODULE_OPERATION_NEW;
         }
-
     }
 
     private void setSpinnerdata() {
@@ -150,6 +160,9 @@ public class CitasForm extends Fragment implements ModuleFormListener, DatePicke
     @Override
     public void onSave(String operation) {
 
+        if (!validateForm()) return;
+
+        // Evita que se realice una operacion diferente notificada desde el menu
         if (operation != Constants.MODULE_OPERATION_SAVE &&
                 operation != Constants.MODULE_OPERATION_DELETE) return;
 
@@ -208,7 +221,6 @@ public class CitasForm extends Fragment implements ModuleFormListener, DatePicke
         citas.setPaciente_id(pacienteSelected.getId());
         citas.setMedico_id(medicoSelected.getId());
         citas.setConsultorio_id(consultorioSelected.getId());
-        // medico.getByIdentificacion( medicoId.getText().toString() ).getId()
 
         citas.setFecha( fecha.getText().toString() );
         citas.setHora( hora.getText().toString() );
@@ -221,7 +233,7 @@ public class CitasForm extends Fragment implements ModuleFormListener, DatePicke
                 break;
 
             case Constants.MODULE_OPERATION_UPDATE:
-                consultorios.setId(this.id);
+                citas.setId(this.id);
                 citas.update();
                 respMsg = getString(R.string.update);
                 break;
@@ -238,20 +250,62 @@ public class CitasForm extends Fragment implements ModuleFormListener, DatePicke
     private void fillForm(Parcelable data) {
 
         Citas cita = (Citas) data;
+        this.id = cita.getId();
         Medicos medicoInfo = cita.getMedico();
         Pacientes pacienteInfo = cita.getPaciente();
+        Consultorios consultorioInfo = cita.getConsultorio();
 
         fecha.setText(cita.getFecha());
         hora.setText(cita.getHora());
 
+        Integer indexItemSelectecInSpinner = null;
 
-        // TODO: realizar la busqueda de los ids del objecto enviado y asignarselos a los spinner's.
-        // consultorios.setSelection(0);
-        // pacienteId.setSelection(0);
-        // medicoId.setSelection(0);
+        // Busca el indice del medico seleccionado y lo selecciona en el Spinner
+        for (int index = 0; index < medicosListData.size(); index++) {
+
+            if (medicoInfo.getIdentificacion().equals(medicosListData.get(index).getIdentificacion())) {
+                indexItemSelectecInSpinner = index;
+                break;
+            }
+        }
+
+        if (indexItemSelectecInSpinner != null) {
+            medicoId.setSelection(indexItemSelectecInSpinner);
+        }
+
+        // Busca el indice del medico seleccionado y lo selecciona en el Spinner
+        indexItemSelectecInSpinner = null;
+        for (int index = 0; index < pacientesListData.size(); index++) {
+
+            if (pacienteInfo.getIdentificacion().equals(pacientesListData.get(index).getIdentificacion())) {
+                indexItemSelectecInSpinner = index;
+                break;
+            }
+        }
+
+        if (indexItemSelectecInSpinner != null) {
+            pacienteId.setSelection(indexItemSelectecInSpinner);
+        }
+
+
+        // Busca el indice del medico seleccionado y lo selecciona en el Spinner
+        indexItemSelectecInSpinner = null;
+        for (int index = 0; index < consultoriosListData.size(); index++) {
+
+            if (consultorioInfo.getdescripcion().equals(consultoriosListData.get(index).getdescripcion())) {
+                indexItemSelectecInSpinner = index;
+                break;
+            }
+        }
+
+        if (indexItemSelectecInSpinner != null) {
+            consultorios.setSelection(indexItemSelectecInSpinner);
+        }
+
+        // Libera el recurso
+        indexItemSelectecInSpinner = null;
 
         setSpinnerdata();
-
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -308,5 +362,15 @@ public class CitasForm extends Fragment implements ModuleFormListener, DatePicke
 
     @Override
     public void onBack() {
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        setSpinnerdata();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

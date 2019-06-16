@@ -24,10 +24,10 @@
     <string name="holder_consultorio">Consultorio Norte</string>
     <string name="holder_telefono">(+57) 2 - 315 318 88 99</string>
     <string name="holder_direccion">Carrera 21 No 25-44</string>
-    <string name="paciente">Paciente</string>
-    <string name="holder_paciente">Paciente: Crhistian Vergara</string>
-    <string name="holder_medico">Medico: David Gomez</string>
-    <string name="medico">Medico</string>
+    <string name="paciente">Paciente: </string>
+    <string name="holder_paciente">Crhistian Vergara</string>
+    <string name="holder_medico">David Gomez</string>
+    <string name="medico">Medico:</string>
     <string name="holder_fecha">21 Noviembre 2016</string>
     <string name="fecha">Fecha:</string>
     <string name="form_name">Nombre *</string>
